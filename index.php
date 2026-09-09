@@ -3,7 +3,7 @@
 
 // charge la configuration / modèle / contrôleur
 require_once 'config.php';
-require_once 'grilleController.php';
+require_once './controller/crtl_Eleve_Selectionne.php';
 
 // Si l'application gère une session d'authentification, on pourrait préférer $_SESSION.
 // Ici on supporte GET pour tester facilement depuis l'URL.
