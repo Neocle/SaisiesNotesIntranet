@@ -1,24 +1,27 @@
 <?php
 
 require_once 'model/Enseignant.php';
+require_once 'util/EnseignantSession.php';
+require_once 'util/Helper.php';
 
 class AuthController {
     public Enseignant $enseignantModel;
 
-    public function __construct(PDO $pdo) {
+    public function __construct() {
+        global $pdo;
         $this->enseignantModel = new Enseignant($pdo);
     }
 
     public function handle() {
         $method = $_SERVER["REQUEST_METHOD"];
 
-        if (isset($_SESSION["id"])) {
+        if (EnseignantSession::isAuthenticated()) {
             header("Location: /");
             exit;
         }
 
         if ($method === "GET") {
-            include "view/login/index.php";
+            include "view/login/form.php";
             exit;
         }
 
@@ -34,7 +37,7 @@ class AuthController {
 
         if (!isset($email) || !isset($password) ||!validateEmail($email)) {
             $error = "L'email n'est pas valide";
-            include "view/login/index.php";
+            include "view/login/form.php";
             return;
         }
 
@@ -42,7 +45,7 @@ class AuthController {
 
         if (!$teacher) {
             $error = "L'email ou mot de passe est incorrect";
-            include "view/login/index.php";
+            include "view/login/form.php";
             return;
         }
 

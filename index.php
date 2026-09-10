@@ -7,12 +7,18 @@ require_once __DIR__ . '/controller/PlanningController.php';
 
 session_start();
 
-$authController = new AuthController($pdo);
+$authController = new AuthController();
 $grilleEvalController = new GrilleEvalController();
 $planningController = new planningController();
 
 $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-/*switch ($url) {
+$file = __DIR__ . $url;
+
+if ($url !== "/" && is_file($file)) {
+    return;
+}
+
+switch ($url) {
     case "/login": {
         $authController->handle();
         break;
@@ -29,6 +35,8 @@ $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         $planningController->Planning();
         break;
     }
-}*/
-
-$planningController->Planning();
+    default: {
+        include __DIR__ . '/view/error/404.php';
+        break;
+    }
+}
