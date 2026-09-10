@@ -9,8 +9,10 @@ class GrilleEval {
         $this->pdo = $pdo;
     }
 
-    
-
+    //METHODE QUI PERMET D'OBTENIR UN TABLEAU DES CRITERES D'EVALUATION SUPPR : VOIR SI POUR LES 3 FAIRE BY ID
+    public function getAll(){
+        return $this->pdo->query("SELECT * FROM critereseval")->fetchAll();
+    }
 }
 
 ?>  
