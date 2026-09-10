@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/database/DatabaseConnection.php';
+<<<<<<< HEAD
 require_once 'controller/PlanningController.php';
 
 $planningController = new planningController();
