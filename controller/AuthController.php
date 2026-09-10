@@ -1,7 +1,7 @@
 <?php
 
 require_once 'model/Enseignant.php';
-require_once 'utils/FieldValidator.php';
+require_once 'util/FieldValidator.php';
 
 class AuthController {
     public Enseignant $enseignantModel;
