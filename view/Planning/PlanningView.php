@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach (isset($plannings) as $planning): ?>
+    <?php foreach (($plannings) as $planning): ?>
         <tr>
             <td><?= $planning['heure'] ?></td>
             <td><?= $planning['salle'] ?></td>
@@ -17,7 +17,6 @@
             <td><?= $planning['professeur_2'] ?></td>
             <td><?= $planning['eleve'] ?></td>
             <td><?= $planning['entreprise'] ?></td>
-            <td><?= $planning['niveau'] ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

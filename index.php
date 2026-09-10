@@ -12,7 +12,7 @@ $grilleEvalController = new GrilleEvalController();
 $planningController = new planningController();
 
 $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-switch ($url) {
+/*switch ($url) {
     case "/login": {
         $authController->handle();
         break;
@@ -29,4 +29,6 @@ switch ($url) {
         $planningController->Planning();
         break;
     }
-}
+}*/
+
+$planningController->Planning();

@@ -23,7 +23,7 @@ class planning
     JOIN Enseignants e1
     ON es.IdEnseignantTuteur = e1.IdEnseignant
     LEFT JOIN Enseignants e2
-    ON es.IdSecondEnseignant = e2.IdEnseignant
+    ON es.IdEnseignantSecond = e2.IdEnseignant
     JOIN EtudiantsBUT2ou3 et
     ON es.IdEtudiant = et.IdEtudiant
     LEFT JOIN AnneeStage ast
@@ -31,7 +31,7 @@ class planning
     AND ast.anneeDebut = es.anneeDebut
     LEFT JOIN Entreprises ent
     ON ast.IdEntreprise = ent.IdEntreprise
-    WHERE es.anneeDebut = 2026
+    WHERE es.anneeDebut = 2025
     AND (e1.IdEnseignant = :idEns OR e2.IdEnseignant = :idEns)
     ORDER BY es.date_h, es.IdSalle;
     ";
@@ -40,8 +40,9 @@ class planning
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->bindParam(":idEns", $idEnseignant);
+            $stmt->execute();
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
         }
