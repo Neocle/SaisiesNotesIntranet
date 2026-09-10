@@ -27,14 +27,14 @@ class planning {
         AND ast.anneeDebut = es.anneeDebut
         LEFT JOIN Entreprises ent
         ON ast.IdEntreprise = ent.IdEntreprise
-        WHERE es.anneeDebut = 2026
+        WHERE es.anneeDebut = 2026 AND (e1.IdEnseignant = :idEns OR e2.IdEnseignant = :idEns)
         ORDER BY es.date_h, es.IdSalle;
         ";
 
         try {
             $stmt = $this->pdo->prepare($sql);
 
-            $stmt->bindParam(":Enseignant", $idEnseignant);
+            $stmt->bindParam(":idEns", $idEnseignant);
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
