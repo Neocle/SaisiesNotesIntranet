@@ -3,7 +3,7 @@
 require_once __DIR__ . '/database/DatabaseConnection.php';
 require_once __DIR__ . '/controller/AuthController.php';
 require_once __DIR__ . '/controller/GrilleEvalController.php';
-require_once 'controller/PlanningController.php';
+require_once __DIR__ . '/controller/PlanningController.php';
 
 session_start();
 
@@ -26,7 +26,7 @@ switch ($url) {
         break;
     }
     case "/planning": {
-        $planningController->getPlanningEnseignants();
+        $planningController->Planning();
         break;
     }
 }
