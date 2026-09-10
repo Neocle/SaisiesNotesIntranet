@@ -1,21 +1,46 @@
 <?php
 
-public function getPlanningEnseignants($idEnseignant){
-    $sql = "SELECT *
-            FROM livres
-            WHERE titre  LIKE :recherche
-               OR auteur LIKE :recherche
-               OR resumer LIKE :recherche
-               OR genre LIKE :recherche";
+class planning {
+    private PDO $pdo;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
 
-    $stmt = $pdo->prepare($sql);
+    public function getPlanningEnseignants($idEnseignant ){ //idEbseignants pas encore pris en compte
+        // Heure / salle / les 2 profs / élève / entreprise
+        $sql = "SELECT
+        es.date_h AS date_heure,
+        es.IdSalle AS salle,
+        CONCAT(e1.prenom, ' ', e1.nom) AS professeur_1,
+        CONCAT(e2.prenom, ' ', e2.nom) AS professeur_2,
+        CONCAT(et.prenom, ' ', et.nom) AS eleve,
+        ent.nom AS entreprise
+        FROM EvalStage es
+        JOIN Enseignants e1
+        ON es.IdEnseignantTuteur = e1.IdEnseignant
+        LEFT JOIN Enseignants e2
+        ON es.IdSecondEnseignant = e2.IdEnseignant
+        JOIN EtudiantsBUT2ou3 et
+        ON es.IdEtudiant = et.IdEtudiant
+        LEFT JOIN AnneeStage ast
+        ON ast.IdEtudiant = es.IdEtudiant
+        AND ast.anneeDebut = es.anneeDebut
+        LEFT JOIN Entreprises ent
+        ON ast.IdEntreprise = ent.IdEntreprise
+        WHERE es.anneeDebut = 2026 AND (e1.IdEnseignant = :idEns OR e2.IdEnseignant = :idEns)
+        ORDER BY es.date_h, es.IdSalle;
+        ";
 
-    $search = "%" . $recherche . "%";
+        try {
+            $stmt = $this->pdo->prepare($sql);
 
-    $stmt->execute([
-        ':recherche' => $search
-    ]);
+            $stmt->bindParam(":idEns", $idEnseignant);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
+
+

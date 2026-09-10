@@ -13,3 +13,13 @@ switch($action) {
         break;    
     default: 
 }
+=======
+require_once __DIR__ . '/controller/GrilleEvalController.php';
+
+$grilleEvalController = new GrilleEvalController();
+
+//SUPPR : FAIRE UN CASE
+$grilleEvalController->show();
+
+?>
+>>>>>>> 3a10ffcb06ba2774a09f7d16e658a0f0009ef1cc
