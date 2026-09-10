@@ -14,9 +14,9 @@ function getInfosEtudiant($idEtudiant, $idUser) {
             JOIN EvalPortfolio ep ON ep.IdEtudiant = e.IdEtudiant
             JOIN Salles s ON s.IdSalle = es.IdSalle
             JOIN EvalAnglais ea ON ea.IdEtudiant = e.IdEtudiant
-            WHERE e.IdEtudiant = ? AND (es.IdEnseignantTuteur = ? OR es.IdSecondEnseignant = ?)";
+            WHERE e.IdEtudiant = ? AND (es.IdEnseignantTuteur = ? OR es.IdSecondEnseignant = ? OR ea.IdEnseignant = ?)";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$idEtudiant, $idUser, $idUser]);
+    $stmt->execute([$idEtudiant, $idUser, $idUser, $idUser]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -36,4 +36,40 @@ function getRoleUtilisateur($idUser, $idEtudiant) {
 
     // Cas 3 : secrétaire (pas lié aux tables EvalStage)
     return "SECRETAIRE";
+}
+
+function getIsTutor ($idUser, $idEtudiant) {
+    global $pdo;
+    $sql = "SELECT 1 FROM EvalStage WHERE IdEnseignantTuteur = ? AND IdEtudiant = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$idUser, $idEtudiant]);
+    if($stmt->fetch()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getIsSecondary ($idUser, $idEtudiant) {
+    global $pdo;
+    $sql = "SELECT 1 FROM EvalStage WHERE IdSecondEnseignant = ? AND IdEtudiant = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$idUser, $idEtudiant]);
+    if($stmt->fetch()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getIsEnglishEvaluator ($idUser, $idEtudiant) {
+    global $pdo;
+    $sql = "SELECT 1 FROM EvalAnglais WHERE IdEnseignant = ? AND IdEtudiant = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$idUser, $idEtudiant]);
+    if($stmt->fetch()) {
+        return true;
+    } else {
+        return false;
+    }
 }
