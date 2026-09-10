@@ -11,6 +11,7 @@
     <tbody>
     <?php foreach (($plannings) as $planning): ?>
         <tr>
+            <td><?= $planning['date'] ?></td>
             <td><?= $planning['heure'] ?></td>
             <td><?= $planning['salle'] ?></td>
             <td><?= $planning['professeur_1'] ?></td>
