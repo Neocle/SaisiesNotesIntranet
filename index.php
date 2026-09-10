@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/database/DatabaseConnection.php';
-<<<<<<< HEAD
 require_once 'controller/PlanningController.php';
 
 $planningController = new planningController();
@@ -14,7 +13,7 @@ switch($action) {
         break;    
     default: 
 }
-=======
+
 require_once __DIR__ . '/controller/GrilleEvalController.php';
 
 $grilleEvalController = new GrilleEvalController();
@@ -23,4 +22,4 @@ $grilleEvalController = new GrilleEvalController();
 $grilleEvalController->show();
 
 ?>
->>>>>>> 3a10ffcb06ba2774a09f7d16e658a0f0009ef1cc
+
