@@ -8,7 +8,7 @@ private $PlanningModel;
 
     public function __construct() {
         global $pdo;
-        $this->PlanningModel = new PlanningModel($pdo);
+        $this->PlanningModel = new planning($pdo);
     }
 
     public function Planning() {
