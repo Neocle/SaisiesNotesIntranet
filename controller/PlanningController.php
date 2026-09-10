@@ -1,6 +1,6 @@
 <?php
 
-require_once 'model/PlanningM.php';
+require_once '/../model/PlanningM.php';
 
 class PlanningController {
     
@@ -12,9 +12,9 @@ private $PlanningModel;
     }
 
     public function Planning() {
-        $PlanningModel = $this->PlanningModel->getPlanningEnseignants($idEnseignant);
+        $plannings = $this->PlanningModel->getPlanningEnseignants($idEnseignant);
        
-        include 'vue/Planning/PlanningView.php';
+        include 'view/layout/header.php';
+        include 'view/planning/PlanningView.php';
     }
 }
-?>
