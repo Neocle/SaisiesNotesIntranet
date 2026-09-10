@@ -7,13 +7,15 @@ class Enseignant {
     }
 
     public function login($email, $password) {
-        $sql = "SELECT * FROM Enseignants WHERE mail = :email AND mdp = :password";
+        $sql = "SELECT * FROM Enseignants WHERE mail = :email AND mdp = :password LIMIT 1";
 
         try {
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->bindParam(":email", $email);
             $stmt->bindParam(":password", $password);
+
+            $stmt->execute();
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
